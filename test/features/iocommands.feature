@@ -7,6 +7,14 @@ Feature: I/O commands
       then we see dbcli prompt
       and we see the sql in prompt
 
+  Scenario: edit sql with external editor
+     When we query "select 123456"
+      and we start external editor
+      and we type sql in the editor
+      and we exit the editor
+      then we see dbcli prompt
+      and we see the sql in prompt
+
   Scenario: tee output from query
      When we tee output
       and we wait for prompt

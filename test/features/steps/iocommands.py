@@ -21,10 +21,18 @@ def step_edit_file(context):
     wrappers.expect_exact(context, '\r\n:', timeout=2)
 
 
+@when(u'we start external editor')
+def step_edit(context):
+    """Edit with external editor."""
+    context.cli.sendline('\e')
+    wrappers.expect_exact(
+        context, 'Entering Ex mode.  Type "visual" to go to Normal mode.', timeout=2)
+
+
 @when('we type sql in the editor')
 def step_edit_type_sql(context):
     context.cli.sendline('i')
-    context.cli.sendline('select * from abc')
+    context.cli.sendline('select abc.*, "✓" from abc')
     context.cli.sendline('.')
     wrappers.expect_exact(context, '\r\n:', timeout=2)
 
@@ -37,12 +45,12 @@ def step_edit_quit(context):
 
 @then('we see the sql in prompt')
 def step_edit_done_sql(context):
-    for match in 'select * from abc'.split(' '):
+    for match in 'select abc * "✓" from abc'.split(' '):
         wrappers.expect_exact(context, match, timeout=1)
     # Cleanup the command line.
     context.cli.sendcontrol('c')
     # Cleanup the edited file.
-    if context.editor_file_name and os.path.exists(context.editor_file_name):
+    if hasattr(context, 'editor_file_name') and os.path.exists(context.editor_file_name):
         os.remove(context.editor_file_name)
 
 
