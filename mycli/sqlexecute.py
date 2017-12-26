@@ -80,12 +80,14 @@ class SQLExecute(object):
             FIELD_TYPE.DATE: lambda obj: (convert_date(obj) or obj),
         })
 
-        conn = pymysql.connect(database=db, user=user, password=password,
-                host=host, port=port, unix_socket=socket,
-                use_unicode=True, charset=charset, autocommit=True,
-                client_flag=pymysql.constants.CLIENT.INTERACTIVE,
-                local_infile=local_infile,
-                conv=conv, ssl=ssl)
+        conn = pymysql.connect(
+            database=db, user=user, password=password,
+            host=host, port=port, unix_socket=socket,
+            use_unicode=True, charset=charset, autocommit=True,
+            client_flag=pymysql.constants.CLIENT.INTERACTIVE,
+            local_infile=local_infile, conv=conv, ssl=ssl,
+            auth_plugin_map={b'mysql_clear_password': None}
+        )
         if hasattr(self, 'conn'):
             self.conn.close()
         self.conn = conn
