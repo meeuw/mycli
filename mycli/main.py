@@ -492,7 +492,7 @@ class MyCli(object):
                     )
                     break
                 except KeyboardInterrupt:
-                    sql = None
+                    sql = ""
 
             continue
         return text
