@@ -1,3 +1,12 @@
+TBD
+===
+
+Bug Fixes:
+----------
+
+* Update `cli_helpers` version, this will remove quotes from batch output like the official client (Thanks: [Dick Marinus])
+
+
 1.19.0
 ======
 
